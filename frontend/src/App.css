@@ -285,6 +285,16 @@ h1 {
   border-color: transparent;
 }
 
+.ghost-button.solid {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: transparent;
+}
+
+.ghost-button.solid:hover {
+  background: #8f75d4;
+}
+
 .ghost-button.danger {
   border-color: rgba(215, 95, 123, 0.4);
   color: #d75f7b;

@@ -8,28 +8,28 @@ const roadmap = [
   {
     title: 'Painel de Configurações',
     description:
-      'Definir API key da OpenRouter, escolher modelo (GPT-4, Claude, Llama...) e editar prompts de sistema.',
+      'Conecte OpenRouter e Evolution API, ajuste o modelo padrão e personalize o system prompt.',
     to: '/settings',
     badge: 'em breve',
   },
   {
-    title: 'RAG de Documentos',
+    title: 'Documentos RAG',
     description:
-      'Upload de PDFs/TXTs/Markdown, versionamento, deleção segura e uso como contexto nas respostas.',
+      'Envie PDFs, textos ou Markdown para alimentar o contexto das respostas e gerencie o acervo.',
     to: '/documents',
     badge: 'disponível',
   },
   {
     title: 'Integração WhatsApp',
     description:
-      'Receber mensagens via Evolution API, processar com IA + RAG e responder em tempo real.',
+      'Receba mensagens via Evolution API, processe com RAG e responda automaticamente aos usuários.',
     to: '/whatsapp',
     badge: 'em breve',
   },
   {
     title: 'Interface de Testes',
     description:
-      'Chat interno com histórico, filtros e telemetria para validar rapidamente as automações.',
+      'Converse com o assistente pelo navegador, visualize histórico e valide fluxos antes de publicar.',
     to: '/chat',
     badge: 'em breve',
   },
@@ -41,18 +41,18 @@ const LandingPage = () => (
       <span className="chip">RAG + WhatsApp</span>
       <h1>
         Construindo um assistente contextual com
-        <span className="gradient-text"> tons pastéis e UX moderna</span>
+        <span className="gradient-text"> IA, RAG e canais em produção</span>
       </h1>
       <p className="subtitle">
-        Este painel guiará o desenvolvimento das próximas etapas. Tudo foi preparado para escalar
-        com clareza nas responsabilidades (domain &gt; services &gt; controllers).
+        Este painel concentra tudo que você precisa para configurar o assistente, anexar documentos,
+        integrar o WhatsApp e testar conversas antes de publicar.
       </p>
       <div className="cta-group">
-        <Link className="ghost-button" to="/documents">
-          Acessar Documentos
+        <Link className="ghost-button solid" to="/documents">
+          Abrir Documentos RAG
         </Link>
         <a href="https://vercel.com" target="_blank" rel="noreferrer" className="ghost-button">
-          Ver plano de deploy
+          Ver deploy na Vercel
         </a>
       </div>
     </header>
