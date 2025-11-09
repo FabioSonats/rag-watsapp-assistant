@@ -1,11 +1,7 @@
 import './App.css';
+import { SettingsForm } from './features/settings/SettingsForm';
 
 const roadmap = [
-  {
-    title: 'Painel de Configurações',
-    description:
-      'Definir API key da OpenRouter, escolher modelo (GPT-4, Claude, Llama...) e editar prompts de sistema.',
-  },
   {
     title: 'RAG de Documentos',
     description:
@@ -21,39 +17,35 @@ const roadmap = [
     description:
       'Chat interno com histórico, filtros e telemetria para validar rapidamente as automações.',
   },
+  {
+    title: 'Métricas e Auditoria',
+    description: 'Dashboards de uso, trilhas de auditoria e avaliação contínua das respostas.',
+  },
 ];
 
 function App() {
   return (
-    <div className="app-shell">
-      <header className="app-header">
-        <span className="chip">RAG + WhatsApp</span>
-        <h1>
-          Construindo um assistente contextual com
-          <span className="gradient-text"> tons pastéis e UX moderna</span>
-        </h1>
-        <p className="subtitle">
-          Este painel guiará o desenvolvimento das próximas etapas. Tudo foi preparado para escalar
-          com clareza nas responsabilidades (domain &gt; services &gt; controllers).
-        </p>
-        <div className="cta-group">
-          <button type="button">Iniciar Desenvolvimento</button>
-          <a href="https://vercel.com" target="_blank" rel="noreferrer">
-            Ver plano de deploy
-          </a>
-        </div>
-      </header>
-
-      <section className="app-content">
-        {roadmap.map((item) => (
-          <article className="roadmap-card" key={item.title}>
-            <h2>{item.title}</h2>
-            <p>{item.description}</p>
-            <span className="badge">em breve</span>
-          </article>
-        ))}
-      </section>
-    </div>
+    <main className="layout">
+      <SettingsForm />
+      <aside className="timeline">
+        <header>
+          <span className="chip">Próximos passos</span>
+          <h2>Roadmap do assistente</h2>
+          <p>
+            Cada etapa adiciona camadas de contexto, automação e visibilidade para facilitar
+            integrações futuras com WhatsApp e outros canais.
+          </p>
+        </header>
+        <ul>
+          {roadmap.map((item) => (
+            <li key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </main>
   );
 }
 

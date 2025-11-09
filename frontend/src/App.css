@@ -4,127 +4,243 @@
   max-width: 1280px;
 }
 
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+.layout {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
 }
 
-.app-header {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+.panel {
   padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.78);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+}
+
+.panel .subtitle {
+  margin: 0;
+  color: var(--color-muted);
+  max-width: 600px;
 }
 
 .chip {
   align-self: flex-start;
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
-  background: rgba(166, 140, 247, 0.15);
+  background: rgba(166, 140, 247, 0.18);
   color: var(--color-primary);
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 
-h1 {
-  margin: 0;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.2;
-  color: var(--color-text);
-}
-
-.gradient-text {
-  display: block;
-  background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.subtitle {
-  margin: 0;
-  max-width: 680px;
-  color: var(--color-muted);
-  font-size: 1rem;
-}
-
-.cta-group {
+.settings-grid {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.cta-group a {
-  padding: 0.55rem 1rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(166, 140, 247, 0.4);
-  color: var(--color-primary);
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.cta-group a:hover {
-  border-color: transparent;
-  background: rgba(255, 255, 255, 1);
-  color: var(--color-secondary);
-}
-
-.app-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  flex-direction: column;
   gap: 1.5rem;
 }
 
-.roadmap-card {
+fieldset {
+  margin: 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(166, 140, 247, 0.2);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.75rem;
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(166, 140, 247, 0.15);
-  box-shadow: 0 15px 35px rgba(46, 42, 58, 0.08);
-  backdrop-filter: blur(18px);
-  position: relative;
-  overflow: hidden;
+  gap: 1rem;
 }
 
-.roadmap-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(145deg, rgba(166, 140, 247, 0.1), transparent 65%);
-  pointer-events: none;
+legend {
+  padding: 0 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
 }
 
-.roadmap-card h2 {
-  margin: 0;
-  font-size: 1.3rem;
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
   color: var(--color-text);
 }
 
-.roadmap-card p {
-  margin: 0;
-  color: var(--color-muted);
-  line-height: 1.5;
+input,
+select,
+textarea {
+  font: inherit;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  border: 1px solid rgba(166, 140, 247, 0.25);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.badge {
-  align-self: flex-start;
-  padding: 0.35rem 0.75rem;
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(166, 140, 247, 0.2);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.secret-input {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.secret-input input {
+  flex: 1;
+}
+
+.secret-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
   border-radius: 999px;
-  background: rgba(255, 179, 198, 0.25);
-  color: #ef5da8;
+  background: rgba(166, 140, 247, 0.18);
+  color: var(--color-primary);
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
+}
+
+.secret-badge.empty {
+  background: rgba(122, 217, 217, 0.18);
+  color: #1c7481;
+}
+
+.secret-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.ghost-button {
+  border-radius: 12px;
+  border: 1px solid rgba(166, 140, 247, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghost-button:hover {
+  border-color: transparent;
+  background: rgba(166, 140, 247, 0.2);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.status {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.status.success {
+  color: #2b8d71;
+}
+
+.status.error {
+  color: #d75f7b;
+}
+
+.timeline {
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(166, 140, 247, 0.2);
+  box-shadow: 0 15px 35px rgba(46, 42, 58, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline header h2 {
+  margin: 0.35rem 0;
+}
+
+.timeline ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.timeline li {
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(166, 140, 247, 0.15);
+  position: relative;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(130deg, rgba(255, 179, 198, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.timeline h3 {
+  margin: 0 0 0.5rem;
+}
+
+.timeline p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -132,12 +248,7 @@ h1 {
     padding: 2.25rem 1rem 3rem;
   }
 
-  .cta-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .cta-group a {
-    text-align: center;
+  .panel {
+    padding: 2rem;
   }
 }

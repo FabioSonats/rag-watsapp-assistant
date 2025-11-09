@@ -11,7 +11,7 @@
     "dev": "npm run dev --workspace frontend",
     "build": "npm run build --workspace @rag-whatsapp-assistant/shared && npm run build --workspace frontend",
     "lint": "npm run lint --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
+    "test": "vitest run && npm run test --workspaces --if-present",
     "format": "npm run format --workspaces --if-present",
     "vercel:dev": "vercel dev",
     "vercel:deploy": "vercel --prod"

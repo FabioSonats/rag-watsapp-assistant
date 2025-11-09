@@ -20,3 +20,15 @@ export type ConfigurationSettingsInput = z.infer<typeof configurationSettingsSch
 export const sanitizeConfiguration = (input: ConfigurationSettingsInput) =>
   configurationSettingsSchema.parse(input);
 
+export const defaultConfiguration = (): ConfigurationSettingsInput => ({
+  openRouterApiKey: '',
+  defaultModel: {
+    provider: 'gpt-4',
+    model: 'gpt-4.1-mini',
+  },
+  systemPrompt:
+    'Você é um assistente de IA que responde com base nas últimas instruções configuradas.',
+  evolutionApiUrl: 'https://evodevs.cordex.ai',
+  evolutionApiKey: '',
+});
+

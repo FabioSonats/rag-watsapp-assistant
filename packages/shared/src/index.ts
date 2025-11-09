@@ -3,13 +3,36 @@ import type { z } from 'zod';
 import {
   aiModelConfigSchema,
   configurationSettingsSchema,
+  defaultConfiguration,
   modelProviders,
   sanitizeConfiguration,
   type ConfigurationSettingsInput,
 } from './configuration';
+import {
+  createDefaultSettingsDocument,
+  settingsDocumentSchema,
+  settingsUpdateSchema,
+  type SecretPreview,
+  type SettingsSnapshot,
+  type SettingsUpdateInput,
+} from './settings';
 
-export { aiModelConfigSchema, configurationSettingsSchema, modelProviders, sanitizeConfiguration };
-export type { ConfigurationSettingsInput };
+export {
+  aiModelConfigSchema,
+  configurationSettingsSchema,
+  defaultConfiguration,
+  modelProviders,
+  sanitizeConfiguration,
+  settingsDocumentSchema,
+  settingsUpdateSchema,
+  createDefaultSettingsDocument,
+};
+export type {
+  ConfigurationSettingsInput,
+  SettingsUpdateInput,
+  SettingsSnapshot,
+  SecretPreview,
+};
 
 export type ModelProvider = (typeof modelProviders)[number];
 export type AiModelConfig = z.infer<typeof aiModelConfigSchema>;
