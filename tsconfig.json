@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": [
+            "ES2022"
+        ],
+        "module": "ES2022",
+        "moduleResolution": "Node",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "noUncheckedIndexedAccess": true,
+        "baseUrl": ".",
+        "paths": {
+            "@rag-whatsapp-assistant/shared": [
+                "packages/shared/src/index.ts"
+            ],
+            "@rag-whatsapp-assistant/shared/*": [
+                "packages/shared/src/*"
+            ],
+            "@api/*": [
+                "api/*"
+            ]
+        },
+        "types": [
+            "node",
+            "vitest"
+        ]
+    },
+    "include": [
+        "api/**/*.ts",
+        "packages/**/*.ts",
+        "scripts/**/*.ts",
+        "vitest.config.ts"
+    ],
+    "exclude": [
+        "frontend",
+        "node_modules",
+        "dist",
+        ".vercel"
+    ]
+}

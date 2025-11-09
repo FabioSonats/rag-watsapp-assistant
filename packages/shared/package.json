@@ -1,0 +1,30 @@
+{
+  "name": "@rag-whatsapp-assistant/shared",
+  "version": "0.1.0",
+  "description": "Shared types and utilities for the RAG WhatsApp assistant",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm --watch",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "test": "vitest run --config ./vitest.config.ts",
+    "test:watch": "vitest watch --config ./vitest.config.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "peerDependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.0"
+  }
+}
+
