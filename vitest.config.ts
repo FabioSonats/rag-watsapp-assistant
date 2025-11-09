@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -11,8 +12,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@shared': './packages/shared/src',
-      '@api': './api',
+      '@shared': path.resolve(__dirname, './packages/shared/src'),
+      '@rag-whatsapp-assistant/shared': path.resolve(__dirname, './packages/shared/src'),
+      '@api': path.resolve(__dirname, './api'),
     },
   },
 });
