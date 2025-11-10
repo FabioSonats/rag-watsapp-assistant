@@ -9,7 +9,7 @@ O projeto oferece:
 - Painel pastel de configurações (OpenRouter, Evolution API, prompt padrão) com persistência no Firestore;
 - RAG com upload, listagem e remoção de documentos;
 - Webhook WhatsApp para receber e responder mensagens usando contexto;
-- Interface local de chat (em roadmap) e histórico de conversas;
+- Interface local de chat (estilo WhatsApp) para testes antes da publicação;
 - Deploy serverless na Vercel e persistência via Firebase (Firestore + Storage).
 
 ## Stack
@@ -46,10 +46,24 @@ O projeto oferece:
    ```
    Gera bundles do pacote compartilhado e do frontend, reproduzindo o processo de deploy.
 
-## Painel de Configurações (API)
+## Funcionalidades
 
-- **GET `/api/settings`**: retorna as configurações persistidas com metadados e status das chaves (somente prévias mascaradas; os valores reais não são expostos).
-- **PUT `/api/settings`**: recebe payload parcial para atualizar os blocos desejados.
+- **Painel de configurações** (`/settings`):
+  - salva chaves do OpenRouter/Evolution API, modelo padrão e system prompt diretamente no Firestore;
+  - exibe status de configuração com prévias mascaradas (as chaves reais não são retornadas).
+- **Documentos RAG** (`/documents`):
+  - upload/listagem/remoção de PDFs, TXT, Markdown e JSON (armazenados no Storage + metadados no Firestore);
+  - o contexto dos documentos alimenta as respostas do chat/WhatsApp.
+- **Chat interno** (`/chat`):
+  - interface estilo WhatsApp para testar o assistente;
+  - usa as mesmas configurações salvas e registra histórico na coleção `conversations`.
+- **Webhook WhatsApp** (`/api/webhooks/whatsapp`):
+  - recebe eventos da Evolution API, consulta RAG, gera resposta com OpenRouter e envia de volta via Evolution.
+
+### API `/api/settings`
+
+- **GET**: retorna as configurações persistidas com metadados e status das chaves (somente prévias mascaradas; os valores reais não são expostos).
+- **PUT**: recebe payload parcial para atualizar os blocos desejados.
 
 Exemplo:
 
@@ -72,6 +86,20 @@ Exemplo:
 
 - Para limpar `defaultPhoneNumberId`, envie `null`.
 - Para manter uma chave secreta existente, basta não enviar o campo (`apiKey`).
+
+### API `/api/chat`
+
+- **GET**: obtém (ou cria) uma conversa local. Passe `conversationId` opcional (`/api/chat?conversationId=...`) para recuperar uma conversa específica.
+- **POST**: envia uma mensagem para o assistente e retorna a conversa atualizada.
+
+Payload:
+
+```json
+{
+  "conversationId": "opcional-uuid",
+  "message": "Olá! Pode me ajudar com o material do onboarding?"
+}
+```
 
 ## Deploy
 

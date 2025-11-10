@@ -4,6 +4,7 @@ import './App.css';
 import { DocumentsPage } from './pages/DocumentsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { ChatPage } from './pages/ChatPage';
 
 const roadmap = [
   {
@@ -32,7 +33,7 @@ const roadmap = [
     description:
       'Converse com o assistente pelo navegador, visualize histórico e valide fluxos antes de publicar.',
     to: '/chat',
-    badge: 'em breve',
+    badge: 'disponível',
   },
 ];
 
@@ -88,15 +89,7 @@ function App() {
           />
         }
       />
-      <Route
-        path="/chat"
-        element={
-          <PlaceholderPage
-            title="Interface de Testes"
-            description="Uma interface interna de chat será disponibilizada para validar conversas com o assistente."
-          />
-        }
-      />
+      <Route path="/chat" element={<ChatPage />} />
     </Routes>
   );
 }
