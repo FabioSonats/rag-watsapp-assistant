@@ -1,8 +1,7 @@
 import { conversationService } from './conversationService';
 import { openRouterClient } from './openRouterClient';
-import { ragContextService } from './ragContextService';
 import { whatsappMessageService } from './whatsappMessageService';
-import { settingsService } from './settingsService';
+import { buildSystemPrompt } from './promptService';
 
 export interface IncomingWhatsAppMessage {
   phone: string;
@@ -10,21 +9,9 @@ export interface IncomingWhatsAppMessage {
   raw: unknown;
 }
 
-const buildPrompt = async () => {
-  const settings = await settingsService.getCurrentSettings();
-  const context = await ragContextService.buildContext();
-  const basePrompt = settings.prompts.system;
-
-  if (!context) {
-    return basePrompt;
-  }
-
-  return `${basePrompt}\n\n=== CONTEXTO ===\n${context}\n\nUse apenas as informações acima para responder.`;
-};
-
 export const whatsappResponder = {
   async handleIncoming(message: IncomingWhatsAppMessage): Promise<string> {
-    const prompt = await buildPrompt();
+    const prompt = await buildSystemPrompt();
 
     const assistantMessage =
       (await openRouterClient.chat([
