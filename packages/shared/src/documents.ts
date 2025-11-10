@@ -24,6 +24,7 @@ export interface DocumentRecord {
 }
 
 export const documentMetadataSchema = z.object({
+    id: z.string().min(1),
     name: z.string().min(1),
     mimeType: z.enum(supportedMimeTypes),
     size: z.number().positive(),
