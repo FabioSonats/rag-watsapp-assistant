@@ -6,10 +6,10 @@ Assistente inteligente com suporte a RAG e integração WhatsApp via Evolution A
 
 O projeto oferece:
 
-- Painel de configuração de modelos OpenRouter e Evolution API;
+- Painel pastel de configurações (OpenRouter, Evolution API, prompt padrão) com persistência no Firestore;
 - RAG com upload, listagem e remoção de documentos;
 - Webhook WhatsApp para receber e responder mensagens usando contexto;
-- Interface local de chat para testes e histórico;
+- Interface local de chat (em roadmap) e histórico de conversas;
 - Deploy serverless na Vercel e persistência via Firebase (Firestore + Storage).
 
 ## Stack
@@ -26,9 +26,10 @@ O projeto oferece:
 2. **Instalação**:
    ```bash
    npm install
-   npm run dev
+   npm run vercel:dev # terminal A - backend (Vercel Functions)
+   npm run dev        # terminal B - frontend (proxy http://localhost:5173 -> 3000)
    ```
-   O comando acima instala todas as dependências (root + workspaces) e inicia o frontend em `localhost:5173`. As funções serverless podem ser testadas com `npm run vercel:dev`.
+   O comando acima instala todas as dependências (root + workspaces). É necessário manter **dois terminais** ativos: um para as funções (`vercel dev` em `localhost:3000`) e outro para o frontend (`localhost:5173`, com proxy automático para `/api`).
 3. **Variáveis de Ambiente**:
    - Copie o arquivo `.env.example` para `.env.local` ou `.env` e preencha as chaves.
 4. **Firebase**:
@@ -39,6 +40,38 @@ O projeto oferece:
    ```bash
    npm test
    ```
+6. **Build**:
+   ```bash
+   npm run build
+   ```
+   Gera bundles do pacote compartilhado e do frontend, reproduzindo o processo de deploy.
+
+## Painel de Configurações (API)
+
+- **GET `/api/settings`**: retorna as configurações persistidas com metadados e status das chaves (somente prévias mascaradas; os valores reais não são expostos).
+- **PUT `/api/settings`**: recebe payload parcial para atualizar os blocos desejados.
+
+Exemplo:
+
+```json
+{
+  "openRouter": {
+    "apiKey": "sk-openrouter-...",
+    "defaultModel": { "provider": "gpt-4", "model": "gpt-4.1-mini" }
+  },
+  "evolution": {
+    "apiUrl": "https://evodevs.cordex.ai",
+    "apiKey": "evo-...",
+    "defaultPhoneNumberId": "123456789"
+  },
+  "prompts": {
+    "system": "Você é um assistente que responde com base nos documentos disponíveis e diretrizes abaixo..."
+  }
+}
+```
+
+- Para limpar `defaultPhoneNumberId`, envie `null`.
+- Para manter uma chave secreta existente, basta não enviar o campo (`apiKey`).
 
 ## Deploy
 

@@ -11,9 +11,16 @@
 - Criação de testes iniciais para validação de configuração.
 - Criação de placeholders de documentação (`README.md`, `PROCESSO.md`).
 
+## Etapa 2 — Painel de Configurações
+
+- Criação do schema compartilhado para configurações (`packages/shared/src/configuration.ts`), incluindo helpers de mascaramento.
+- Implementação do serviço `settingsService` (Firestore) com fallback para variáveis de ambiente.
+- API `GET/PUT /api/settings` com sanitização de entrada e saída.
+- Interface pastel no frontend (`/settings`) com formulários para OpenRouter, Evolution API e prompt do assistente.
+- Atualização do README com instruções de uso/local e rota da API.
+
 ## Próximos Passos
 
-- Implementar painel de configurações com tema pastel moderno.
 - Implementar fluxo de upload/listagem/remoção de documentos utilizando Firebase Storage e Firestore.
 - Implementar webhook WhatsApp com processamento RAG.
 - Adicionar interface de chat local com histórico.

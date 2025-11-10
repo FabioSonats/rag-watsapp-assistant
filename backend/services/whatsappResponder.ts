@@ -1,8 +1,8 @@
-import { env } from '../infra/env';
 import { conversationService } from './conversationService';
 import { openRouterClient } from './openRouterClient';
 import { ragContextService } from './ragContextService';
 import { whatsappMessageService } from './whatsappMessageService';
+import { settingsService } from './settingsService';
 
 export interface IncomingWhatsAppMessage {
   phone: string;
@@ -11,8 +11,9 @@ export interface IncomingWhatsAppMessage {
 }
 
 const buildPrompt = async () => {
+  const settings = await settingsService.getCurrentSettings();
   const context = await ragContextService.buildContext();
-  const basePrompt = env.systemPrompt;
+  const basePrompt = settings.prompts.system;
 
   if (!context) {
     return basePrompt;

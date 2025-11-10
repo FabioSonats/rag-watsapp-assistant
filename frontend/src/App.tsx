@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { DocumentsPage } from './pages/DocumentsPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 const roadmap = [
   {
@@ -10,7 +11,7 @@ const roadmap = [
     description:
       'Conecte OpenRouter e Evolution API, ajuste o modelo padrão e personalize o system prompt.',
     to: '/settings',
-    badge: 'em breve',
+    badge: 'disponível',
   },
   {
     title: 'Documentos RAG',
@@ -76,12 +77,7 @@ function App() {
       <Route path="/documents" element={<DocumentsPage />} />
       <Route
         path="/settings"
-        element={
-          <PlaceholderPage
-            title="Painel de Configurações"
-            description="Em breve será possível editar os prompts e credenciais diretamente pela interface pastel."
-          />
-        }
+        element={<SettingsPage />}
       />
       <Route
         path="/whatsapp"
