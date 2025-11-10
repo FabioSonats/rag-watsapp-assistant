@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { env } from '../infra/env';
 
 export interface EvolutionSendMessageInput {
-  phoneNumberId: string;
+  phoneNumberId?: string;
   to: string;
   body: string;
   type?: 'text';
@@ -16,6 +16,12 @@ export interface EvolutionResponse {
 
 export const evolutionApiClient = {
   async sendMessage(input: EvolutionSendMessageInput): Promise<EvolutionResponse> {
+    const phoneNumberId = input.phoneNumberId ?? env.whatsappDefaultPhoneNumberId;
+
+    if (!phoneNumberId) {
+      throw new Error('Nenhum phoneNumberId foi informado nem configurado por padrão.');
+    }
+
     const response = await fetch(`${env.evolutionApiUrl}/messages/send`, {
       method: 'POST',
       headers: {
@@ -23,7 +29,7 @@ export const evolutionApiClient = {
         Authorization: `Bearer ${env.evolutionApiKey}`,
       },
       body: JSON.stringify({
-        phoneNumberId: input.phoneNumberId ?? env.whatsappDefaultPhoneNumberId,
+        phoneNumberId,
         to: input.to,
         type: input.type ?? 'text',
         text: {

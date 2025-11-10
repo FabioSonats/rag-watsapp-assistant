@@ -106,8 +106,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       error instanceof AppError
         ? error
         : new AppError('Internal server error', 500, {
-            details: error instanceof Error ? error.message : undefined,
-          });
+          details: error instanceof Error ? error.message : undefined,
+        });
 
     sendJson(res, appError.statusCode, {
       error: appError.message,
