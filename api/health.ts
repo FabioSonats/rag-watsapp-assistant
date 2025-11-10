@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { healthController } from './controllers/healthController';
-import { AppError } from './domain/errors/AppError';
-import { sendJson } from './utils/http';
+import { healthController } from '../backend/controllers/healthController';
+import { AppError } from '../backend/domain/errors/AppError';
+import { sendJson } from '../backend/utils/http';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {

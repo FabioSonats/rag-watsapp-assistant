@@ -22,8 +22,8 @@
             "@rag-whatsapp-assistant/shared/*": [
                 "packages/shared/src/*"
             ],
-            "@api/*": [
-                "api/*"
+            "@backend/*": [
+                "backend/*"
             ]
         },
         "types": [
@@ -33,6 +33,7 @@
     },
     "include": [
         "api/**/*.ts",
+        "backend/**/*.ts",
         "packages/**/*.ts",
         "scripts/**/*.ts",
         "vitest.config.ts"

@@ -1,3 +1,5 @@
+import { FieldValue } from 'firebase-admin/firestore';
+
 import { firestore } from '../infra/firebaseAdmin';
 
 const WEBHOOK_COLLECTION = 'webhook_events';
@@ -18,7 +20,7 @@ export const whatsappWebhookService = {
       provider: event.provider,
       payload: event.payload,
       timestamp,
-      createdAt: firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
     });
   },
 };

@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { AppError } from '../domain/errors/AppError';
-import { env } from '../infra/env';
-import { whatsappResponder } from '../services/whatsappResponder';
-import { whatsappWebhookService } from '../services/whatsappWebhookService';
-import { sendJson } from '../utils/http';
+import { AppError } from '../../backend/domain/errors/AppError';
+import { env } from '../../backend/infra/env';
+import { whatsappResponder } from '../../backend/services/whatsappResponder';
+import { whatsappWebhookService } from '../../backend/services/whatsappWebhookService';
+import { sendJson } from '../../backend/utils/http';
 
 const extractIncomingMessage = (payload: unknown) => {
   const value =
