@@ -45,6 +45,11 @@ export const chatService = {
     await conversationService.ensureConversation(conversationId, { type: 'local' });
     const messages = await conversationService.getMessages(conversationId, HISTORY_LIMIT);
 
+    console.log('[chatService] history', {
+      conversationId,
+      messages: messages.length,
+    });
+
     return {
       conversationId,
       reply: '',
@@ -59,6 +64,12 @@ export const chatService = {
     }
 
     const conversationId = input.conversationId ?? generateConversationId();
+
+    console.log('[chatService] sendMessage', {
+      conversationId,
+      hasConversationId: Boolean(input.conversationId),
+      snippet: trimmedMessage.slice(0, 80),
+    });
 
     await conversationService.ensureConversation(conversationId, {
       type: 'local',
@@ -84,6 +95,11 @@ export const chatService = {
     ]);
 
     const updated = await conversationService.getMessages(conversationId, HISTORY_LIMIT);
+
+    console.log('[chatService] response', {
+      conversationId,
+      messages: updated.length,
+    });
 
     return {
       conversationId,

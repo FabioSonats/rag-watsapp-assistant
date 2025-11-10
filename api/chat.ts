@@ -9,8 +9,8 @@ const handleError = (res: VercelResponse, error: unknown) => {
     error instanceof AppError
       ? error
       : new AppError('Erro interno ao processar requisição', 500, {
-          reason: error instanceof Error ? error.message : undefined,
-        });
+        reason: error instanceof Error ? error.message : undefined,
+      });
 
   sendJson(res, appError.statusCode, {
     error: appError.message,
@@ -20,6 +20,12 @@ const handleError = (res: VercelResponse, error: unknown) => {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
+    console.log('[api/chat] incoming', {
+      method: req.method,
+      query: req.query,
+      hasBody: Boolean(req.body),
+    });
+
     if (req.method === 'GET') {
       const conversationId =
         typeof req.query.conversationId === 'string'
@@ -28,7 +34,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       const targetConversationId = conversationId ?? generateConversationId();
       const result = await chatService.getHistory(targetConversationId);
-      sendJson(res, 200, result);
+      sendJson(res, 200, {
+        conversationId: result.conversationId,
+        reply: result.reply,
+        messages: result.messages,
+      });
+      console.log('[api/chat] history delivered', {
+        conversationId: result.conversationId,
+        messages: result.messages.length,
+      });
       return;
     }
 
@@ -42,12 +56,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         message: typeof payload.message === 'string' ? payload.message : '',
       });
 
-      sendJson(res, 200, result);
+      sendJson(res, 200, {
+        conversationId: result.conversationId,
+        reply: result.reply,
+        messages: result.messages,
+      });
+      console.log('[api/chat] message processed', {
+        conversationId: result.conversationId,
+        messages: result.messages.length,
+      });
       return;
     }
 
     throw new AppError('Method not allowed', 405);
   } catch (error) {
+    console.error('[api/chat] error', error);
     handleError(res, error);
   }
 }

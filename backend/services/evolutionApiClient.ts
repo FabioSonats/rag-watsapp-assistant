@@ -54,14 +54,19 @@ export const evolutionApiClient = {
       throw new Error(`Evolution API error ${response.status}: ${error}`);
     }
 
-    const data = (await response.json()) as unknown;
+    const data = (await response.json()) as Record<string, unknown>;
 
-    const typed = data as Partial<EvolutionResponse>;
-    if (!typed || typeof typed.messageId !== 'string' || typeof typed.status !== 'string') {
+    const messageId = typeof data.messageId === 'string' ? data.messageId : null;
+    const status = typeof data.status === 'string' ? data.status : null;
+
+    if (!messageId || !status) {
       throw new Error('Evolution API retornou payload inesperado');
     }
 
-    return typed as EvolutionResponse;
+    return {
+      messageId,
+      status,
+    };
   },
 };
 
