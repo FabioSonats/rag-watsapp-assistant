@@ -1,3 +1,5 @@
+import { FieldValue } from 'firebase-admin/firestore';
+
 import { firestore } from '../infra/firebaseAdmin';
 
 const CONVERSATIONS_COLLECTION = 'conversations';
@@ -19,7 +21,7 @@ export const conversationService = {
     await conversationRef.set(
       {
         phoneNumber,
-        updatedAt: firestore.FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
       },
       { merge: true },
     );
@@ -32,7 +34,7 @@ export const conversationService = {
           role: message.role,
           content: message.content,
           raw: message.raw,
-          createdAt: firestore.FieldValue.serverTimestamp(),
+          createdAt: FieldValue.serverTimestamp(),
         }),
       ),
     );

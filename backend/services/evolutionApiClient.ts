@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 
-import { env } from '../infra/env';
+import { AppError } from '../domain/errors/AppError';
+import { settingsService } from './settingsService';
 
 export interface EvolutionSendMessageInput {
   phoneNumberId?: string;
@@ -16,17 +17,27 @@ export interface EvolutionResponse {
 
 export const evolutionApiClient = {
   async sendMessage(input: EvolutionSendMessageInput): Promise<EvolutionResponse> {
-    const phoneNumberId = input.phoneNumberId ?? env.whatsappDefaultPhoneNumberId;
+    const settings = await settingsService.getCurrentSettings();
+    const { apiUrl, apiKey, defaultPhoneNumberId } = settings.evolution;
+    const phoneNumberId = input.phoneNumberId ?? defaultPhoneNumberId;
 
-    if (!phoneNumberId) {
-      throw new Error('Nenhum phoneNumberId foi informado nem configurado por padrão.');
+    if (!apiKey) {
+      throw new AppError('Evolution API key não configurada', 500);
     }
 
-    const response = await fetch(`${env.evolutionApiUrl}/messages/send`, {
+    if (!apiUrl) {
+      throw new AppError('Evolution API URL não configurada', 500);
+    }
+
+    if (!phoneNumberId) {
+      throw new AppError('Nenhum phoneNumberId foi informado nem configurado no painel.', 400);
+    }
+
+    const response = await fetch(`${apiUrl}/messages/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.evolutionApiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         phoneNumberId,
@@ -43,7 +54,14 @@ export const evolutionApiClient = {
       throw new Error(`Evolution API error ${response.status}: ${error}`);
     }
 
-    return response.json();
+    const data = (await response.json()) as unknown;
+
+    const typed = data as Partial<EvolutionResponse>;
+    if (!typed || typeof typed.messageId !== 'string' || typeof typed.status !== 'string') {
+      throw new Error('Evolution API retornou payload inesperado');
+    }
+
+    return typed as EvolutionResponse;
   },
 };
 

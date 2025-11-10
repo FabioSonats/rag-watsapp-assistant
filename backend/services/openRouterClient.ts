@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { env } from '../infra/env';
+import { settingsService } from './settingsService';
 
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -11,7 +11,10 @@ const OPENROUTER_BASE_URL = process.env.OPENROUTER_BASE_URL ?? 'https://openrout
 
 export const openRouterClient = {
   async chat(messages: ChatMessage[]): Promise<string> {
-    if (!env.openRouterApiKey) {
+    const settings = await settingsService.getCurrentSettings();
+    const { apiKey, defaultModel } = settings.openRouter;
+
+    if (!apiKey) {
       throw new Error('OpenRouter API key is not configured');
     }
 
@@ -19,10 +22,10 @@ export const openRouterClient = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.openRouterApiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: env.defaultModel.model,
+        model: defaultModel.model,
         messages,
       }),
     });
