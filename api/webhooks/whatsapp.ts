@@ -2,8 +2,50 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { AppError } from '../domain/errors/AppError';
 import { env } from '../infra/env';
+import { whatsappResponder } from '../services/whatsappResponder';
 import { whatsappWebhookService } from '../services/whatsappWebhookService';
 import { sendJson } from '../utils/http';
+
+const extractIncomingMessage = (payload: unknown) => {
+  const value =
+    // Evolution direct payload
+    (payload as any)?.messages
+      ? (payload as any)
+      : (payload as any)?.entry?.[0]?.changes?.[0]?.value ?? null;
+
+  if (!value) {
+    return null;
+  }
+
+  const message = value.messages?.[0];
+  if (!message) {
+    return null;
+  }
+
+  const body =
+    message.text?.body ??
+    message.message ??
+    message.interactive?.text ??
+    message.document?.caption ??
+    '';
+
+  const phone =
+    message.from ??
+    value.contacts?.[0]?.wa_id ??
+    value.chatId ??
+    value.clientId ??
+    '';
+
+  if (!phone || !body) {
+    return null;
+  }
+
+  return {
+    phone,
+    body,
+    raw: message,
+  };
+};
 
 const verifyGetChallenge = (req: VercelRequest, res: VercelResponse) => {
   const mode = req.query['hub.mode'];
@@ -51,6 +93,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       payload,
       timestamp: new Date().toISOString(),
     });
+
+    const message = extractIncomingMessage(payload);
+
+    if (message) {
+      await whatsappResponder.handleIncoming(message);
+    }
 
     sendJson(res, 200, { acknowledged: true });
   } catch (error) {

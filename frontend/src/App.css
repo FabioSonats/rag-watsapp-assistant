@@ -94,6 +94,19 @@ h1 {
   backdrop-filter: blur(18px);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.roadmap-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 45px rgba(46, 42, 58, 0.12);
+}
+
+.badge.available {
+  background: rgba(126, 200, 200, 0.2);
+  color: #268585;
 }
 
 .roadmap-card::after {
@@ -125,6 +138,179 @@ h1 {
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.page-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.page-nav {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.page-nav a {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.documents-panel {
+  gap: 2rem;
+}
+
+.dropzone {
+  border: 2px dashed rgba(166, 140, 247, 0.35);
+  border-radius: 24px;
+  padding: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.dropzone.dragging {
+  border-color: var(--color-primary);
+  background: rgba(166, 140, 247, 0.12);
+  transform: translateY(-2px);
+}
+
+.dropzone-icon {
+  font-size: 2.25rem;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.status-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.25rem;
+  border-radius: 16px;
+  background: rgba(166, 140, 247, 0.12);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.status-banner.error {
+  background: rgba(231, 112, 141, 0.18);
+  color: #d75f7b;
+}
+
+.status-banner.success {
+  background: rgba(126, 200, 200, 0.18);
+  color: #268585;
+}
+
+.refresh-button {
+  border-radius: 999px;
+  border: 1px solid rgba(166, 140, 247, 0.4);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.4rem 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refresh-button:hover {
+  border-color: transparent;
+  background: rgba(166, 140, 247, 0.2);
+}
+
+.documents-list {
+  border-radius: 20px;
+  border: 1px solid rgba(166, 140, 247, 0.15);
+  background: rgba(255, 255, 255, 0.75);
+  overflow: hidden;
+}
+
+.documents-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.documents-list th,
+.documents-list td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(166, 140, 247, 0.08);
+}
+
+.documents-list th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.documents-list tbody tr:hover {
+  background: rgba(166, 140, 247, 0.08);
+}
+
+.doc-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.doc-name small {
+  color: var(--color-muted);
+}
+
+.ghost-button {
+  border-radius: 12px;
+  border: 1px solid rgba(166, 140, 247, 0.4);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+
+.ghost-button:hover {
+  background: rgba(166, 140, 247, 0.2);
+  border-color: transparent;
+}
+
+.ghost-button.solid {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: transparent;
+}
+
+.ghost-button.solid:hover {
+  background: #8f75d4;
+}
+
+.ghost-button.danger {
+  border-color: rgba(215, 95, 123, 0.4);
+  color: #d75f7b;
+}
+
+.ghost-button.danger:hover {
+  background: rgba(215, 95, 123, 0.18);
+}
+
+.empty-state {
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--color-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 @media (max-width: 720px) {
